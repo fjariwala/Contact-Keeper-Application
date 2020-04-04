@@ -36,18 +36,18 @@ const ContactSearch = () => {
             <Container >
 
                 <Form>
-                    <Row className='col'>
-                        <Col className='col-md-8'>
+                    <Row className='row'>
+                        <Col className='col-md-6'>
                             <Form.Group controlId="formBasicSearch">
 
-                                <Form.Label>Search</Form.Label>
+                                <Form.Label className='col-md-6'>Search</Form.Label>
                                 <Form.Control ref={text} onChange={onSearch} type="text" placeholder="Search" />
 
                             </Form.Group>
-                            {/* <Button variant="success" onChange={onSearch}>Search</Button> */}
                         </Col>
 
                     </Row>
+
                 </Form>
 
             </Container>

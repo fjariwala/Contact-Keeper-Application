@@ -122,8 +122,8 @@ const ContactForm = () => {
                             />
                             <br />
                             {current ?
-                                <Button variant="primary" size="lg" block onClick={onUpdate}>Update</Button>
-                                : <Button variant="primary" size="lg" block onClick={onSubmit}>Submit</Button>}
+                                <Button variant="outline-primary" size="lg" block onClick={onUpdate}>Update</Button>
+                                : <Button variant="outline-primary" size="lg" block onClick={onSubmit}>Submit</Button>}
                             {current ?
                                 <Button variant="light" size="lg" block onClick={() => clearContact()}>Clear</Button>
                                 : ''}

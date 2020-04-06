@@ -20,6 +20,7 @@ const Login = (props) => {
 
     return (
         <div >
+            <br/>
             <Container className="container-fluid">
                 <Row className="justify-content-md-center">
 
@@ -32,10 +33,10 @@ const Login = (props) => {
                                     </h1>
                                 </Col>
                             </Row>
-                            <Form>
+                            <Form onSubmit={onFormSubmit}>
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Label>Email address</Form.Label>
-                                    <Form.Control type="email" name='email' onChange={onChange} value={email} placeholder="Enter email" />
+                                    <Form.Control type="email" name='email' required onChange={onChange} value={email} placeholder="Enter email" />
                                     <Form.Text className="text-muted">
                                         We'll never share your email with anyone else.
                                 </Form.Text>
@@ -43,14 +44,10 @@ const Login = (props) => {
 
                                 <Form.Group controlId="formBasicPassword">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" name='password' onChange={onChange} value={password} placeholder="Password" />
+                                    <Form.Control type="password" name='password' required onChange={onChange} value={password} placeholder="Password" />
                                 </Form.Group>
 
-                                <Form.Group controlId="formBasicCheckbox">
-                                    <Form.Check type="checkbox" label="I'm agreed to terms and conditions" />
-                                </Form.Group>
-
-                                <Button variant="outline-primary" onClick={onFormSubmit} type="submit" size="lg" block>
+                                <Button variant="outline-primary" type="submit" size="lg" block>
                                     Submit
                             </Button>
                             </Form>

@@ -32,8 +32,9 @@ router.post('/',
 
     const errors = validationResult(req);
 
+    // means if errors are here... so then respond with error code
     if (!errors.isEmpty()) {
-      return res.status(400).json({ error: errors.array() });
+      return res.status(400).json({ msg: errors.array() });
     }
 
     const { name, email, password } = req.body;

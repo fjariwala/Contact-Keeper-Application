@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
-import { Form, Button, Container, Row, Col, Badge } from 'react-bootstrap';
+import React, { useState, useContext } from 'react';
+import { Form, Button, Container, Row, Col, Badge, Alert } from 'react-bootstrap';
+
+import AlertContext from '../../context/alert/alertContext';
+import AuthContext from '../../context/auth/authContext';
 
 const Register = (props) => {
 
@@ -12,38 +15,81 @@ const Register = (props) => {
 
     const { name, email, password, password2 } = user;
 
+    /**
+     * Using Alert context for setting up the alert msg and type
+     */
+    const alertContext = useContext(AlertContext);
+    const { setAlert } = alertContext;
+
+    const authContext = useContext(AuthContext);
+    const { registerUser, error } = authContext;
+
     const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
 
     const onFormSubmit = e => {
         e.preventDefault();
 
-        console.log(user);
+        /**
+         * Form validation with setting up the alert
+         */
+        // if (name === '' || email === '' || password === '') {
+        //     setAlert('Please enter all the fields', 'danger');
+        // }
+        // else if (password.match(!password2)) {
+        //     setAlert('Passwords mis matched', 'danger');
+        // }
+        // else {
+        //     console.log(user);
+        // }
+        if (password !== password2) {
+            alert('Password does not match..');
+        }
+        else if (password.length < 5) {
+            alert('Password lenght must be alteast 5 characters');
+        }
+        else {
+            registerUser({
+                name, email, password
+            })
+        }
     };
 
     return (
         <div >
+
             <Container className="container-fluid">
                 <Row className="justify-content-md-center">
 
                     <div className="col-xs-6 col-md-5">
                         <Col md="auto">
+
                             <Row className="justify-content-md-center">
+
                                 <Col md="auto">
+
                                     <h1>
                                         <Badge variant="secondary" >Registration</Badge>
                                     </h1>
-                                </Col> 
+                                </Col>
                             </Row>
+                            <br />
+                            {
+                                error ?
+                                    <Alert variant="danger">
+                                        {error}
+                                    </Alert>
+                                    : ''
+                            }
 
-                            <Form>
+                            <Form onSubmit={onFormSubmit}>
                                 <Form.Group controlId="formBasicName">
                                     <Form.Label >First Name</Form.Label>
-                                    <Form.Control type="text" name='name' onChange={onChange} value={name} placeholder="Enter first name" />
+                                    <Form.Control type="text" name='name' onChange={onChange} value={name} placeholder="Enter first name" required />
                                 </Form.Group>
 
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Label>Email address</Form.Label>
-                                    <Form.Control type="email" name='email' onChange={onChange} value={email} placeholder="Enter email" />
+                                    <Form.Control type="email" name='email' onChange={onChange} value={email} placeholder="Enter email" required />
                                     <Form.Text className="text-muted">
                                         We'll never share your email with anyone else.
                                 </Form.Text>
@@ -51,21 +97,21 @@ const Register = (props) => {
 
                                 <Form.Group controlId="formBasicPassword">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" name='password' onChange={onChange} value={password} placeholder="Password" />
+                                    <Form.Control type="password" name='password' onChange={onChange} value={password} placeholder="Password" required />
                                 </Form.Group>
 
                                 <Form.Group controlId="formBasicPassword2">
                                     <Form.Label>Confirm Password</Form.Label>
-                                    <Form.Control type="password" name='password2' onChange={onChange} value={password2} placeholder="Re-enter your password" />
+                                    <Form.Control type="password" name='password2' onChange={onChange} value={password2} placeholder="Re-enter your password" required />
                                 </Form.Group>
 
                                 <Form.Group controlId="formBasicCheckbox">
                                     <Form.Check type="checkbox" label="I'm agreed to terms and conditions" />
                                 </Form.Group>
 
-                                <Button variant="outline-primary" onClick={onFormSubmit} type="submit" size="lg" block>
+                                <Button variant="outline-primary" type="submit" size="lg" block>
                                     Submit
-                            </Button>
+                                </Button>
                             </Form>
                         </Col>
                     </div>

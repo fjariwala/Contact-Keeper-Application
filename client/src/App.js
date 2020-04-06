@@ -5,11 +5,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './components/pages/Home';
 import About from './components/pages/About';
 import NavbarMain from './components/layouts/NavbarMain';
+import Alerts from './components/layouts/Alerts';
 import ContactState from "./context/contact/ContactState";
 import ContactForm from "./components/contactPages/ContactForm";
 import RegisterForm from './components/authPages/Register';
 import LoginForm from './components/authPages/Login';
 import AuthState from './context/auth/AuthState';
+import AlertState from './context/alert/AlertState';
 //import './App.css';
 
 const App = () => {
@@ -17,24 +19,30 @@ const App = () => {
   return (
     <AuthState>
       <ContactState>
-        <Router>
-          <Fragment >
+        <AlertState>
 
-            <NavbarMain />
+          <Router>
+            <Fragment >
 
-            <div className="container">
-              <Switch>
-                <Route exact path='/' component={Home} />
-                <Route exact path='/about' component={About} />
-                <Route exact path='/register' component={RegisterForm} />
-                <Route exact path='/login' component={LoginForm} />
-              </Switch>
-            </div>
+              <NavbarMain />
 
-          </Fragment>
-        </Router>
+              <div className="container">
+                <Alerts />
+                <Switch>
+                  <Route exact path='/' component={Home} />
+                  <Route exact path='/about' component={About} />
+                  <Route exact path='/register' component={RegisterForm} />
+                  <Route exact path='/login' component={LoginForm} />
+                </Switch>
+
+              </div>
+
+            </Fragment>
+          </Router>
+
+        </AlertState>
       </ContactState>
-    </AuthState>
+    </AuthState >
   );
 }
 

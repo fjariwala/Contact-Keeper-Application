@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
-import { NavLink, Link, Route } from 'react-router-dom';
+import { NavLink, Link, Route, Redirect } from 'react-router-dom';
 import { IoIosList } from 'react-icons/io';
 
 const NavbarMain = ({ title, icon }) => {
@@ -12,12 +12,14 @@ const NavbarMain = ({ title, icon }) => {
     const homeRoute = false;
     const aboutRoute = false;
 
-    const goOnHomePage = () => {
+    // const goOnHomePage = () => {
 
-        homeRoute = true;
-    }
+    //     homeRoute = true;
+    // }
 
-
+    // const redirectToHome = () => {
+    //     this.homeRoute = true;
+    // }
 
     return (
 
@@ -28,7 +30,7 @@ const NavbarMain = ({ title, icon }) => {
                     <i className="contract"/>
                 </h1> */}
                 <IoIosList size='30px' style={{ marginRight: '10px' }} />
-                <Navbar.Brand href="#home">{title}</Navbar.Brand>
+                <Navbar.Brand >{title}</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
 
@@ -37,7 +39,7 @@ const NavbarMain = ({ title, icon }) => {
                         <Nav.Link ><Link to='/about'>About Us</Link></Nav.Link>
                         <Nav.Link><Link to='/login'>Login</Link></Nav.Link>
                         <Nav.Link ><Link to='/register'>Register</Link></Nav.Link>
-                        
+
                     </Nav>
 
                 </Navbar.Collapse>

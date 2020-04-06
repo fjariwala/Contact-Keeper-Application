@@ -74,6 +74,7 @@ export default (state, action) => {
             break;
 
         default:
+            return state;
             break;
     }
 }

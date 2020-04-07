@@ -30,7 +30,7 @@ const Register = (props) => {
             props.history.push('/');
         }
 
-    }, [isAuthenticated, props.history])
+    }, [isAuthenticated, props.history]);
 
     const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
 

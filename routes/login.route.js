@@ -50,13 +50,12 @@ router.post('/',
             })
 
             if (!user) {
-                res.status(400).json({ msg: 'No user is available from this email id..' });
+                res.status(400).json({ msg: 'Invalid Email Id' });
             }
 
             /**
              * Now checking wheather the password is correct or not
              */
-
             const isMatch = await bcrypt.compare(password, user.password);
 
             /** If the passwords don't match */
@@ -67,7 +66,7 @@ router.post('/',
 
             var payload = {
 
-                userData: {
+                user: {
                     id: user.id
                 }
             };

@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
-import { Form, Button, Container, Row, Col, Badge } from 'react-bootstrap';
+import React, { useState, useContext, useEffect } from 'react';
+import { Form, Button, Container, Row, Col, Badge, Alert } from 'react-bootstrap';
+
+import AuthContext from '../../context/auth/authContext';
 
 const Login = (props) => {
+
+    const authContext = useContext(AuthContext);
+    const { loginUser, error, isAuthenticated } = authContext;
 
     const [user, setUser] = useState({
         email: '',
@@ -15,12 +20,22 @@ const Login = (props) => {
     const onFormSubmit = e => {
         e.preventDefault();
 
-        console.log(user);
+        loginUser({
+            email,
+            password
+        });
     };
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            props.history.push('/');
+        }
+
+    }, [isAuthenticated, props.history]);
 
     return (
         <div >
-            <br/>
+            <br />
             <Container className="container-fluid">
                 <Row className="justify-content-md-center">
 
@@ -33,6 +48,14 @@ const Login = (props) => {
                                     </h1>
                                 </Col>
                             </Row>
+                            <br />
+                            {
+                                error ?
+                                    <Alert variant="danger">
+                                        {error}
+                                    </Alert>
+                                    : ''
+                            }
                             <Form onSubmit={onFormSubmit}>
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Label>Email address</Form.Label>

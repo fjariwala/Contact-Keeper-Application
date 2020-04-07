@@ -6,13 +6,20 @@ import Home from './components/pages/Home';
 import About from './components/pages/About';
 import NavbarMain from './components/layouts/NavbarMain';
 import Alerts from './components/layouts/Alerts';
-import ContactState from "./context/contact/ContactState";
 import ContactForm from "./components/contactPages/ContactForm";
 import RegisterForm from './components/authPages/Register';
 import LoginForm from './components/authPages/Login';
 import AuthState from './context/auth/AuthState';
+import ContactState from "./context/contact/ContactState";
 import AlertState from './context/alert/AlertState';
+import setAuthToken from './utils/setAuthToken';
 //import './App.css';
+
+// load user into global states
+// this method is usefull to load user everysingle time whenever the component mounts
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const App = () => {
 

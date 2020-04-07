@@ -1,25 +1,15 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
 // import 'bootstrap/dist/css/bootstrap.min.css';
-
-import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
-import { NavLink, Link, Route, Redirect } from 'react-router-dom';
+import { Nav, Navbar } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { IoIosList } from 'react-icons/io';
+
+import AuthContext from '../../context/auth/authContext';
 
 const NavbarMain = ({ title, icon }) => {
 
-
-    const homeRoute = false;
-    const aboutRoute = false;
-
-    // const goOnHomePage = () => {
-
-    //     homeRoute = true;
-    // }
-
-    // const redirectToHome = () => {
-    //     this.homeRoute = true;
-    // }
+    const { authContext } = useContext(AuthContext);
 
     return (
 

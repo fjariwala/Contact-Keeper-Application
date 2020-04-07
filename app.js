@@ -14,7 +14,7 @@ var connectToDb = require('./config/dbConnection');
  */
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/users.route');
 var loginRouter = require('./routes/login.route');
 var contactRouter = require('./routes/contact.route');
 

@@ -12,7 +12,7 @@ router.get('/', auth, async (req, res) => {
     try {
 
         var user = await userModel.findById(req.user.id).select('-password');
-        res.status(200).json(user);
+        res.status(200).json({ msg: user });
 
     } catch (err) {
 
@@ -38,7 +38,7 @@ router.post('/',
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            return res.status(400).json({ error: errors.array() });
+            return res.status(400).json({ msg: errors.array() });
         }
 
         const { email, password } = req.body;

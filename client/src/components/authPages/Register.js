@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Form, Button, Container, Row, Col, Badge, Alert } from 'react-bootstrap';
 
 import AlertContext from '../../context/alert/alertContext';
@@ -22,7 +22,15 @@ const Register = (props) => {
     const { setAlert } = alertContext;
 
     const authContext = useContext(AuthContext);
-    const { registerUser, error } = authContext;
+    var { registerUser, error, isAuthenticated } = authContext;
+
+    useEffect(() => {
+
+        if (isAuthenticated) {
+            props.history.push('/');
+        }
+
+    }, [isAuthenticated, props.history])
 
     const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
 
@@ -43,11 +51,16 @@ const Register = (props) => {
         // }
         if (password !== password2) {
             alert('Password does not match..');
+            // error = 'Passwords are not same';
         }
         else if (password.length < 5) {
             alert('Password lenght must be alteast 5 characters');
+            // error = 'Your password must be 5 characters long';
         }
         else {
+            /**
+             * Register method from authContext page
+             */
             registerUser({
                 name, email, password
             })

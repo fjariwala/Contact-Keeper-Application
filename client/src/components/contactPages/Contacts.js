@@ -1,8 +1,9 @@
-import React, { Fragment, useContext, useState } from 'react'
+import React, { Fragment, useContext, useEffect } from 'react'
+import { Badge } from 'react-bootstrap';
+
 import ContactContext from '../../context/contact/contactContext';
 import ContactItem from './ContactItem';
-
-import { Badge } from 'react-bootstrap';
+import SpinnerFile from '../layouts/SpinnerFile';
 
 const Contacts = () => {
 
@@ -10,34 +11,51 @@ const Contacts = () => {
 
     const contactContext = useContext(ContactContext);
 
-    const { contacts, filtered } = contactContext;
+    const { contacts, filtered, getContacts, loading } = contactContext;
 
-    if (contacts.length === 0) {
-        return <h4>Please add contacts</h4>;
-    }
+    useEffect(() => {
+        getContacts();
+        // eslint-disable-next-line
+    }, []);
+
+    // if (contacts.length === 0) {
+    //     return <h4>Please add contacts</h4>;
+    // }
 
     return (
 
         <Fragment>
-            {filtered ?
 
-                <h3><Badge variant="secondary" >Searched Contacts</Badge></h3>
+            {loading ?
+
+                <SpinnerFile />
 
                 :
-                <h3><Badge variant="secondary" >Contact Details</Badge></h3>
 
+                <Fragment>
+                    {filtered ?
+
+                        <h3><Badge variant="secondary" >Searched Contacts</Badge></h3>
+
+                        :
+                        <h3><Badge variant="secondary" >Contact Details</Badge></h3>
+
+                    }
+
+                    {
+                        filtered ?
+                            filtered.map(contact => (
+                                <ContactItem key={contact._id} contact={contact} />
+                            ))
+                            :
+                            contacts.map(contact => (
+                                <ContactItem key={contact._id} contact={contact} />
+                            ))
+                    }
+                </Fragment>
             }
 
-            {
-                filtered ?
-                    filtered.map(contact => (
-                        <ContactItem key={contact.id} contact={contact} />
-                    ))
-                    :
-                    contacts.map(contact => (
-                        <ContactItem key={contact.id} contact={contact} />
-                    ))
-            }
+
 
 
         </Fragment>

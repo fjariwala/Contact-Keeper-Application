@@ -20,7 +20,7 @@ router.get('/', auth, async (req, res) => {
     } catch (err) {
 
         console.error(err.message);
-        res.status(400).json({ msg: err });
+        res.status(400).json({ msg: err.message });
     }
 
 })
@@ -55,7 +55,7 @@ router.post('/',
 
             var contact = await newContact.save();
 
-            res.status(200).json(contact);
+            res.status(200).json({ contact });
 
         } catch (err) {
 
@@ -64,6 +64,9 @@ router.post('/',
         }
     })
 
+/**
+ * This is to update contact
+ */
 router.put('/:id', auth, async (req, res) => {
 
     const { name, email, phone, type } = req.body;
@@ -96,7 +99,7 @@ router.put('/:id', auth, async (req, res) => {
         res.status(200).json(contact);
 
     } catch (err) {
-        
+
         console.error(err.message);
         res.status(500).json({ msg: 'Internal server error' });
     }

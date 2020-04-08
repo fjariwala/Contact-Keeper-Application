@@ -3,6 +3,7 @@ import Contacts from '../contactPages/Contacts';
 import ContactForm from '../contactPages/ContactForm';
 import ContactSearch from '../contactPages/ContactSearch';
 import AuthContext from '../../context/auth/authContext';
+import ContactContext from '../../context/contact/contactContext';
 
 import { Row, Container } from 'react-bootstrap';
 
@@ -13,6 +14,7 @@ const Home = () => {
 
     useEffect(() => {
         loadUser();
+        //getContacts();
         // eslint-disable-next-line
     }, []);
 

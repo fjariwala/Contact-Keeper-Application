@@ -58,6 +58,10 @@ const ContactForm = () => {
             phone: '',
             type: 'personal'
         });
+        /**
+         * Setting form to default when the data is submitted
+         */
+        clearContact();
     }
     return (
         <Fragment>

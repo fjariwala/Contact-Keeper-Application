@@ -1,8 +1,13 @@
 import React, { useReducer } from 'react';
-import uuid from 'uuid';
+import axios from 'axios';
+
 import ContactContext from './contactContext';
 import ContactReducer from './contactReducer';
+import setAuthToken from '../../utils/setAuthToken';
+
 import {
+    GET_CONTACTS,
+    CLEAR_CONTACTS,
     ADD_CONTACT,
     DELETE_CONTACT,
     UPDATE_CONTACT,
@@ -11,49 +16,74 @@ import {
     FILTER_CONTACTS,
     CLEAR_FILTER,
     SET_CURRENT,
-    CLEAR_CURRENT
+    CLEAR_CURRENT,
+    CONTACT_ERROR
 } from '../types';
 
 const ContactState = (props) => {
 
     const initialState = {
-        contacts: [
-            {
-                id: 1,
-                name: 'paresh',
-                email: 'pareshha333@gmail.com',
-                phone: '8849901203',
-                type: 'personal'
-            },
-            {
-                id: 2,
-                name: 'shila',
-                email: 'shilabenpj@gmail.com',
-                phone: '9898202262',
-                type: 'professional'
-            },
-            {
-                id: 3,
-                name: 'fenil',
-                email: 'feniljariwala82@gmail.com',
-                phone: '9898202262',
-                type: 'personal'
-            }
-        ],
+        contacts: [],
         current: null,
-        filtered: null
+        loading: true,
+        filtered: null,
+        error: null
     };
 
     const [state, dispatch] = useReducer(ContactReducer, initialState);
 
-    // Add contact function
-    const addContact = contact => {
+    // Get contacts for specific user
+    const getContacts = async () => {
 
-        contact.id = 6;
-        dispatch({
-            type: ADD_CONTACT,
-            payload: contact
-        })
+        // load user into global states
+        // this method is usefull to load user everysingle time whenever the component mounts
+        if (localStorage.token) {
+            setAuthToken(localStorage.token);
+        }
+
+        try {
+
+            const res = await axios.get('/contact');
+
+            dispatch({
+                type: GET_CONTACTS,
+                payload: res.data
+            })
+        } catch (err) {
+
+            dispatch({
+                type: CONTACT_ERROR,
+                payload: err.response.data.msg
+            })
+        }
+    }
+
+    // Add contact function
+    const addContact = async contact => {
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        try {
+
+            const res = await axios.post('/contact', contact, config);
+
+            dispatch({
+                type: ADD_CONTACT,
+                payload: res.data
+            })
+
+        } catch (err) {
+
+            dispatch({
+                type: CONTACT_ERROR,
+                payload: err.response.data.msg
+            })
+        }
+
     }
 
     // Delete contact
@@ -115,6 +145,9 @@ const ContactState = (props) => {
                 contacts: state.contacts,
                 current: state.current,
                 filtered: state.filtered,
+                loading:state.loading,
+                error: state.error,
+                getContacts,
                 addContact,
                 deleteContact,
                 editContact,

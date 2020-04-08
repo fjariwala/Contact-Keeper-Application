@@ -1,20 +1,47 @@
 import React, { Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
 // import 'bootstrap/dist/css/bootstrap.min.css';
-import { Nav, Navbar } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Nav, Navbar, NavDropdown, NavLink } from 'react-bootstrap';
+import { Link, Redirect } from 'react-router-dom';
 import { IoIosList } from 'react-icons/io';
+import { FiLogOut } from "react-icons/fi";
 
 import AuthContext from '../../context/auth/authContext';
 
 const NavbarMain = ({ title, icon }) => {
 
     const authContext = useContext(AuthContext);
-    const { isAuthenticated, logoutUser, token } = authContext;
+    const { isAuthenticated, logoutUser, user } = authContext;
 
     const logout = () => {
         logoutUser();
     }
+
+    const goHome = () => {
+
+        // return props.history.push('/');
+    }
+
+    const authLinks = (
+        <Fragment>
+            <Nav.Link><Link to='/'>Home</Link></Nav.Link>
+            <Nav.Link><Link to='/about'>About</Link></Nav.Link>
+            <Nav.Link>{user && user.name + ' '}<FiLogOut size='25px' title='Logout' onClick={logout} style={{ marginRight: '10px' }} /></Nav.Link>
+        </Fragment>
+    );
+
+    const guestLinks = (
+        <Fragment>
+            {/* <Nav.Link><Link to='/'>Home</Link></Nav.Link> */}
+            {/* <Nav.Link onClick={goHome}>Home</Nav.Link>
+            <Nav.Link><Link to='/about'>About</Link></Nav.Link> */}
+            <Nav.Link><Link to='/login'>Login</Link></Nav.Link>
+            <Nav.Link ><Link to='/register'>Register</Link></Nav.Link>
+        </Fragment>
+    );
+
+
+
 
     return (
 
@@ -29,24 +56,13 @@ const NavbarMain = ({ title, icon }) => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
 
-                    {/* {
-                        token  ?
-                            <Nav className="ml-auto">
-                                <Nav.Link><Link to='/'>Home</Link></Nav.Link>
-                                <Nav.Link ><Link to='/about'>About Us</Link></Nav.Link>
-                                <Nav.Link><Link to='/login' onClick={logout}> Logout</Link></Nav.Link>
-                                <Nav.Link ><Link to='/register'>Profile</Link></Nav.Link>
-                            </Nav>
-                            :
-                            <Nav className="ml-auto">
-                                <Nav.Link><Link to='/'>Home</Link></Nav.Link>
-                                <Nav.Link ><Link to='/about'>About Us</Link></Nav.Link>
-                                <Nav.Link><Link to='/login'>Login</Link></Nav.Link>
-                                <Nav.Link ><Link to='/register'>Register</Link></Nav.Link>
-                            </Nav>
-                    } */}
+                    <Nav className="ml-auto">
+                        {/* <Nav.Link><Link to='/'>Home</Link></Nav.Link>
+                        <Nav.Link ><Link to='/about'>About Us</Link></Nav.Link> */}
 
+                        {isAuthenticated ? authLinks : guestLinks}
 
+                    </Nav>
 
                 </Navbar.Collapse>
             </Navbar>

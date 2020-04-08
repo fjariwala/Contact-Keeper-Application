@@ -13,7 +13,7 @@ var connectToDb = require('./config/dbConnection');
  * Database Password : YbYzA7GRiTXq8VOo
  */
 
-var indexRouter = require('./routes/index');
+//var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users.route');
 var loginRouter = require('./routes/login.route');
 var contactRouter = require('./routes/contact.route');
@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+//app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 app.use('/contact', contactRouter);

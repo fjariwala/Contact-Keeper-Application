@@ -7,21 +7,23 @@ import { FaPhoneVolume } from 'react-icons/fa';
 
 const ContactItem = ({ contact }) => {
 
-    const { id, name, email, phone, type } = contact;
+    const { _id, name, email, phone, type } = contact;
 
     const contactContext = useContext(ContactContext);
+    const { deleteContact, clearContact, editContact, updateContact } = contactContext;
 
     const onDelete = e => {
         e.preventDefault();
 
-        contactContext.deleteContact(id);
-        contactContext.clearContact();
+        deleteContact(_id);
+        clearContact();
     }
 
     const onUpdate = e => {
         e.preventDefault();
 
-        contactContext.editContact(contact);
+        editContact(contact);
+        //updateContact(contact);
     }
 
     return (

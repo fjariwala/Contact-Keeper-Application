@@ -52,12 +52,12 @@ const ContactForm = () => {
         /**
         * Setting form to default when the data is submitted
         */
-        setContact({
-            name: '',
-            email: '',
-            phone: '',
-            type: 'personal'
-        });
+        // setContact({
+        //     name: '',
+        //     email: '',
+        //     phone: '',
+        //     type: 'personal'
+        // });
         /**
          * Setting form to default when the data is submitted
          */
@@ -112,17 +112,19 @@ const ContactForm = () => {
                                 type='radio'
                                 name='type'
                                 value='personal'
-
+                                checked={type === 'personal'}
                                 label='Personal'
                                 onChange={onChange}
+                                required
                             />
                             <Form.Check
                                 type='radio'
                                 name='type'
                                 value='professional'
-
+                                checked={type === 'professional'}
                                 label='Professional'
                                 onChange={onChange}
+                                required
                             />
                             <br />
                             {current ?

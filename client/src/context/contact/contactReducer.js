@@ -2,6 +2,7 @@ import {
     ADD_CONTACT,
     DELETE_CONTACT,
     UPDATE_CONTACT,
+    CLEAR_CONTACTS,
     SET_ALERT,
     REMOVE_ALERT,
     FILTER_CONTACTS,
@@ -37,7 +38,7 @@ export default (state, action) => {
             return {
                 ...state,
                 contacts: state.contacts.filter(
-                    contact => contact.id !== action.payload
+                    contact => contact._id !== action.payload
                 ),
                 loading: false
             }
@@ -61,7 +62,7 @@ export default (state, action) => {
             return {
                 ...state,
                 contacts: state.contacts.map(contact =>
-                    contact.id === action.payload.id ? action.payload : contact
+                    contact._id === action.payload._id ? action.payload : contact
                 ),
                 loading: false
             }
@@ -87,6 +88,16 @@ export default (state, action) => {
             return {
                 ...state,
                 error: action.payload
+            }
+
+        case CLEAR_CONTACTS:
+            return {
+                ...state,
+                contacts: null,
+                current: null,
+                loading: false,
+                filtered: null,
+                error: null
             }
 
         default:

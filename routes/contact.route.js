@@ -80,9 +80,9 @@ router.put('/:id', auth, async (req, res) => {
 
     try {
 
-        var contact = await contactModel.findById(req.params.id);
+        let contact = await contactModel.findById(req.params.id);
 
-        console.log(contact);
+        //console.log(contact);
 
         if (!contact) return res.status(400).json({ msg: 'Contact not found..' });
 
@@ -91,11 +91,11 @@ router.put('/:id', auth, async (req, res) => {
             return res.status(401).json({ msg: 'Unauthorized ..' });
         }
 
-        contact = await contactModel.findByIdAndUpdate(req.user.id,
+        contact = await contactModel.findByIdAndUpdate(req.params.id,
             { $set: contactFields },
             { new: true }
         )
-
+        //console.log(contact);
         res.status(200).json(contact);
 
     } catch (err) {
@@ -103,6 +103,22 @@ router.put('/:id', auth, async (req, res) => {
         console.error(err.message);
         res.status(500).json({ msg: 'Internal server error' });
     }
+})
+
+router.delete('/:id', async (req, res) => {
+
+    const id = req.params.id;
+
+    try {
+        await contactModel.findByIdAndDelete(id);
+
+        res.status(200).json({ msg: 'Contact deleted' });
+
+    } catch (err) {
+
+        res.status(400).json({ msg: err.message });
+    }
+
 })
 
 module.exports = router;

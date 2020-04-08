@@ -23,7 +23,7 @@ import {
 const ContactState = (props) => {
 
     const initialState = {
-        contacts: [],
+        contacts: null,
         current: null,
         loading: true,
         filtered: null,
@@ -87,12 +87,24 @@ const ContactState = (props) => {
     }
 
     // Delete contact
-    const deleteContact = id => {
+    const deleteContact = async (id) => {
 
-        dispatch({
-            type: DELETE_CONTACT,
-            payload: id
-        })
+        try {
+
+            await axios.delete(`/contact/${id}`)
+
+            dispatch({
+                type: DELETE_CONTACT,
+                payload: id
+            })
+
+        } catch (err) {
+
+            dispatch({
+                type: CONTACT_ERROR,
+                payload: err.response.data.msg
+            })
+        }
     }
 
     // Edit contact
@@ -113,13 +125,31 @@ const ContactState = (props) => {
     }
 
     // Update contact
-    const updateContact = contact => {
+    const updateContact = async (contact) => {
 
-        dispatch({
-            type: UPDATE_CONTACT,
-            payload: contact
-        })
-        //clearContact()
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        try {
+
+            const res = await axios.put(`/contact/${contact._id}`, contact, config);
+
+            dispatch({
+                type: UPDATE_CONTACT,
+                payload: res.data
+            })
+
+        } catch (err) {
+
+            dispatch({
+                type: CONTACT_ERROR,
+                payload: err.response.data.msg
+            })
+        }
+
     }
 
     // Search contact
@@ -139,13 +169,21 @@ const ContactState = (props) => {
         })
     }
 
+    // clear contacts state
+    const clearContacts = () => {
+
+        dispatch({
+            type: CLEAR_CONTACTS
+        })
+    }
+
     return (
         <div>
             <ContactContext.Provider value={{
                 contacts: state.contacts,
                 current: state.current,
                 filtered: state.filtered,
-                loading:state.loading,
+                loading: state.loading,
                 error: state.error,
                 getContacts,
                 addContact,
@@ -154,7 +192,8 @@ const ContactState = (props) => {
                 clearContact,
                 updateContact,
                 searchContact,
-                clearSearch
+                clearSearch,
+                clearContacts
             }}>
                 {props.children}
             </ContactContext.Provider>

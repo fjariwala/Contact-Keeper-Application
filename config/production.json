@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://feniljariwala82:YbYzA7GRiTXq8VOo@contact-database-fpg9b.mongodb.net/contact_details_db?retryWrites=true&w=majority",
+    "jwtSecret": "jGloNUhBzq"
+}

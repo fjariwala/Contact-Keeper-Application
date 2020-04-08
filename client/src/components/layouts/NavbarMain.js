@@ -7,26 +7,26 @@ import { IoIosList } from 'react-icons/io';
 import { FiLogOut } from "react-icons/fi";
 
 import AuthContext from '../../context/auth/authContext';
+import ContactContext from '../../context/contact/contactContext';
 
 const NavbarMain = ({ title, icon }) => {
 
     const authContext = useContext(AuthContext);
     const { isAuthenticated, logoutUser, user } = authContext;
 
+    const contactContext = useContext(ContactContext);
+    const { clearContacts } = contactContext;
+
     const logout = () => {
         logoutUser();
-    }
-
-    const goHome = () => {
-
-        // return props.history.push('/');
+        clearContacts();
     }
 
     const authLinks = (
         <Fragment>
             <Nav.Link><Link to='/'>Home</Link></Nav.Link>
-            <Nav.Link><Link to='/about'>About</Link></Nav.Link>
-            <Nav.Link>{user && user.name + ' '}<FiLogOut size='25px' title='Logout' onClick={logout} style={{ marginRight: '10px' }} /></Nav.Link>
+            {/* <Nav.Link><Link to='/about'>About</Link></Nav.Link> */}
+            <Nav.Link>{'Hello, '}{user && user.name + ' '}<FiLogOut size='25px' title='Logout' onClick={logout} style={{ marginRight: '10px' }} /></Nav.Link>
         </Fragment>
     );
 

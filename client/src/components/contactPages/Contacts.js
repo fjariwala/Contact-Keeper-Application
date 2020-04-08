@@ -18,9 +18,9 @@ const Contacts = () => {
         // eslint-disable-next-line
     }, []);
 
-    // if (contacts.length === 0) {
-    //     return <h4>Please add contacts</h4>;
-    // }
+    if (contacts !== null && contacts.length === 0 && !loading) {
+        return <h4>Please add contacts</h4>;
+    }
 
     return (
 
@@ -33,6 +33,7 @@ const Contacts = () => {
                 :
 
                 <Fragment>
+                    <br />
                     {filtered ?
 
                         <h3><Badge variant="secondary" >Searched Contacts</Badge></h3>

@@ -1,5 +1,9 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+/** This are the links to show you how to use materialize css too.. */
+/** import 'materialize-css/dist/css/materialize.min.css';
+import 'materialize-css/dist/js/materialize.min.js';*/
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Home from './components/pages/Home';
